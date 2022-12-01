@@ -1,1 +1,15 @@
 name: cms-ars-5.0-k8s-cluster-stig-overlay
+title: cms-ars-5.0-k8s-cluster-stig-overlay
+maintainer: CMS SAF Team
+copyright: 
+copyright_email: saf@cms.hhs.gov
+license: Apache-2.0
+summary: "CMS ARS 5.0 Overlay InSpec Validation Profile for Kubernetes STIG Version 1 Release 1"
+version: 1.1.0
+inspec_version: ">= 4.0"
+supports:
+- platform: k8s
+
+depends:
+- name: k8s-cluster-stig-baseline
+  url: https://github.com/mitre/k8s-cluster-stig-baseline/archive/main.tar.gz
