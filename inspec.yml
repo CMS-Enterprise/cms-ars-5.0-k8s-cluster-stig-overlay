@@ -13,3 +13,28 @@ supports:
 depends:
 - name: k8s-cluster-stig-baseline
   url: https://github.com/mitre/k8s-cluster-stig-baseline/archive/main.tar.gz
+
+inputs:
+  - name: system_categorization
+    desc: "Selected system baseline based on the environment variable"
+    type: String
+    value: <%= ENV['BASELINE'].nil? ? 'Moderate (Default)' : ENV['BASELINE'] %>
+
+  - name: overlay_controls
+    desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
+    type: Array
+    <% if ENV['BASELINE'] == 'High-HVA' %>
+    value: []
+    <% elsif ENV['BASELINE'] == 'High' %>
+    value: []
+    <% elsif ENV['BASELINE'] == 'Moderate-HVA' %>
+    value: []
+    <% elsif ENV['BASELINE'] == 'Moderate' || ENV['BASELINE'].nil? %> # Default
+    value: []
+    <% elsif ENV['BASELINE'] == 'Low-HVA' %>
+    value:
+      - "V-242417" # SC-2
+    <% elsif ENV['BASELINE'] == 'Low' %>
+    value:
+      - "V-242417" # SC-2
+    <% end %>
