@@ -38,7 +38,7 @@ inputs:
     <% elsif ENV['BASELINE'] == 'Low-HVA' %>
     value:
       - "V-242417" # SC-2
-        - "V-242437" # Not in ARS 5.0
+      - "V-242437" # Not in ARS 5.0
     <% elsif ENV['BASELINE'] == 'Low' %>
     value:
       - "V-242417" # SC-2
