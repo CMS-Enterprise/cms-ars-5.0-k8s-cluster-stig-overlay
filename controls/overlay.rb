@@ -15,15 +15,6 @@ include_controls 'k8s-cluster-stig-baseline' do
     end
   end
 
-  # Non-ARS control
-  control "V-242437" do
-    impact 0.0
-    desc "caveat", "Not applicable for this CMS ARS 5.0 overlay, since the requirement is not included in CMS ARS 5.0"
-    describe "Not applicable for this CMS ARS 5.0 overlay, since the requirement is not included in CMS ARS 5.0" do 
-      skip "Not applicable for this CMS ARS 5.0 overlay, since the requirement is not included in CMS ARS 5.0"
-    end
-  end
-
   ## Semantic Changes  
   
   control 'V-242410' do
