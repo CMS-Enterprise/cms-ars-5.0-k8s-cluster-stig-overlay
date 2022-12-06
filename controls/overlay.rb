@@ -1,4 +1,4 @@
-# Semantic changes
+# encoding: UTF-8
 
 overlay_controls = input('overlay_controls')
 system_categorization = input('system_categorization')
