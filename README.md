@@ -2,6 +2,8 @@
 
 InSpec profile to validate the secure configuration of Kubernetes cluster against [DISA's](https://public.cyber.mil/stigs/) Kubernetes Secure Technical Implementation Guide (STIG) Version 1 Release 1 tailored for CMS ARS 5.0.
 
+The Kubernetes STIG includes security requirements for both the Kubernetes cluster itself and the nodes that comprise it. This profile includes the checks for the cluster portion. It is intended  to be used in conjunction with the <b>[Kubernetes Node]([https://github.com/](https://github.com/mitre/cms-ars-5.0-k8s-node-stig-overlay))</b> profile that performs automated compliance checks of the Kubernetes nodes.
+
 ## Getting Started  
 ### InSpec (CINC-auditor) setup
 For maximum flexibility/accessibility, we’re moving to “cinc-auditor”, the open-source packaged binary version of Chef InSpec, compiled by the CINC (CINC Is Not Chef) project in coordination with Chef using Chef’s always-open-source InSpec source code. For more information: https://cinc.sh/
@@ -57,10 +59,14 @@ vi ~/.inspec/plugins.json
 # Run the following command to confirm train-kubernetes is installed
 cinc-auditor plugin list
 ```
-### How to execute this instance  
-(See: https://www.inspec.io/docs/reference/cli/)
 
 #### Validate access to Kubernetes API
+The profile makes use of the `kubectl` utility to access the Kubernetes API. The runner host must have `kubectl` installed -- see the [Kubernetes documentation for tools](https://kubernetes.io/docs/tasks/tools/) for details.
+
+A host's connection to the Kubernetes API is established using credentials recorded in the `kubeconfig` file. For the profile to use the Kubernetes API, the runner host must either have a valid `kubeconfig` file either in the default location ($HOME/.kube/config) or have designated a file as the `kubeconfig` file using the `$KUBECONFIG` environment variable. See the [Kubernetes documentation for kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) for details.
+
+You can test if the runner host has access to the Kubernetes API by running `kubectl` from the command line:
+
 ```sh
 kubectl get nodes
 
@@ -90,6 +96,8 @@ The following inputs may be configured in an inputs ".yml" file for the profile 
 # Minimum version of Kubernetes deployment (default 'v1.19.5')
 k8s_minium_version: 
 ```
+### How to execute this instance  
+(See: https://www.inspec.io/docs/reference/cli/)
 
 ## Running the Profile
 
