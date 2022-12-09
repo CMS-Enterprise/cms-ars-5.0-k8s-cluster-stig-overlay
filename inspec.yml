@@ -1,0 +1,46 @@
+name: cms-ars-5.0-k8s-cluster-stig-overlay
+title: cms-ars-5.0-k8s-cluster-stig-overlay
+maintainer: CMS SAF Team
+copyright: 
+copyright_email: saf@cms.hhs.gov
+license: Apache-2.0
+summary: "CMS ARS 5.0 Overlay InSpec Validation Profile for Kubernetes STIG Version 1 Release 1"
+version: 1.1.0
+inspec_version: ">= 4.0"
+supports:
+- platform: k8s
+
+depends:
+- name: k8s-cluster-stig-baseline
+  url: https://github.com/mitre/k8s-cluster-stig-baseline/archive/main.tar.gz
+
+inputs:
+  - name: system_categorization
+    desc: "Selected system baseline based on the environment variable"
+    type: String
+    value: <%= ENV['BASELINE'].nil? ? 'Moderate (Default)' : ENV['BASELINE'] %>
+
+  - name: overlay_controls
+    desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
+    type: Array
+    <% if ENV['BASELINE'] == 'High-HVA' %>
+    value:
+      - "V-242437" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'High' %>
+    value: 
+      - "V-242437" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Moderate-HVA' %>
+    value: 
+      - "V-242437" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Moderate' || ENV['BASELINE'].nil? %> # Default
+    value: 
+      - "V-242437" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Low-HVA' %>
+    value:
+      - "V-242417" # SC-2
+      - "V-242437" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Low' %>
+    value:
+      - "V-242417" # SC-2
+      - "V-242437" # Not in ARS 5.0
+    <% end %>
